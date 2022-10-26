@@ -16,9 +16,6 @@ public class PlayerScript : MonoBehaviour
     //Shoot Bullets
     public GameObject playerBulletPrefab;
     public GameObject playerBulletSpawn1;
-    public GameObject playerBulletSpawn2;
-    public GameObject playerBulletSpawn3;
-    public GameObject playerBulletSpawn4;
 
     public bool canShoot = true;
     private float waitTime = 0.1f;
@@ -39,7 +36,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            if (transform.position.y <= 4f)
+            if (transform.position.y <= 3.8f)
             {
                 transform.position += 
                     transform.up * movementSpeed * Time.deltaTime;
@@ -50,7 +47,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            if (transform.position.x >= -6f)
+            if (transform.position.x >= -5.8f)
             {
                 transform.position -= 
                     transform.right * movementSpeed * Time.deltaTime;
@@ -59,7 +56,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S))
         {
-            if (transform.position.y >= -4f)
+            if (transform.position.y >= -3.8f)
             {
                 transform.position -= 
                     transform.up * movementSpeed * Time.deltaTime;
@@ -69,7 +66,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D))
         {
-            if (transform.position.x <= 6f)
+            if (transform.position.x <= 5.8f)
             {
                 transform.position += 
                     transform.right * movementSpeed * Time.deltaTime;
@@ -101,19 +98,6 @@ public class PlayerScript : MonoBehaviour
         Instantiate(playerBulletPrefab,
                 playerBulletSpawn1.transform.position,
                 transform.rotation);
-
-        Instantiate(playerBulletPrefab,
-                playerBulletSpawn2.transform.position,
-                transform.rotation);
-
-        Instantiate(playerBulletPrefab,
-            playerBulletSpawn3.transform.position,
-            Quaternion.identity);
-
-        Instantiate(playerBulletPrefab,
-            playerBulletSpawn4.transform.position,
-            Quaternion.identity);
-
 
     }
 
