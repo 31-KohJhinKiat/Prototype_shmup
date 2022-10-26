@@ -6,104 +6,64 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
-    //Audio
-    public AudioSource audioSource;
-    public AudioClip BulletSound;
+    private float moveSpeed = 10;
 
-    //Movementspeed
-    public float movementSpeed;
-
-    //Shoot Bullets
-    public GameObject playerBulletPrefab;
-    public GameObject playerBulletSpawn1;
-
-    public bool canShoot = true;
-    private float waitTime = 0.1f;
-    private float currentShootTime = 0.0f;
-    
-
+    bool moveUp;
+    bool moveDown;
+    bool moveLeft;
+    bool moveRight;
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Movement
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (transform.position.y <= 3.8f)
-            {
-                transform.position += 
-                    transform.up * movementSpeed * Time.deltaTime;
-            }
-
-
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            if (transform.position.x >= -5.8f)
-            {
-                transform.position -= 
-                    transform.right * movementSpeed * Time.deltaTime;
-            }
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            if (transform.position.y >= -3.8f)
-            {
-                transform.position -= 
-                    transform.up * movementSpeed * Time.deltaTime;
-            }
-
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            if (transform.position.x <= 5.8f)
-            {
-                transform.position += 
-                    transform.right * movementSpeed * Time.deltaTime;
-            }
-
-        }
-
-        //Attacks
-        currentShootTime = currentShootTime + Time.deltaTime;
-
-        if (Input.GetKey(KeyCode.J))
-        {
-            if (currentShootTime >= waitTime)
-            {
-                ShootBullets();
-                playShootSound();
-
-                currentShootTime = 0;
-            }
-
-            
-
-        }
+        moveUp = Input.GetKey(KeyCode.UpArrow) 
+            || Input.GetKey(KeyCode.W);
+        moveDown = Input.GetKey(KeyCode.DownArrow)
+            || Input.GetKey(KeyCode.S);
+        moveLeft = Input.GetKey(KeyCode.LeftArrow)
+            || Input.GetKey(KeyCode.A);
+        moveRight = Input.GetKey(KeyCode.RightArrow)
+            || Input.GetKey(KeyCode.D);
 
     }
 
-    public void ShootBullets()
+    private void FixedUpdate()
     {
-        Instantiate(playerBulletPrefab,
-                playerBulletSpawn1.transform.position,
-                transform.rotation);
+        Vector2 pos = transform.position;
 
-    }
+        float moveAmount = moveSpeed * Time.fixedDeltaTime;
+        Vector2 move = Vector2.zero;
 
-    public void playShootSound()
-    {
-        audioSource.PlayOneShot(BulletSound);
+        if (moveUp)
+        {
+            move.y += moveAmount;
+        }
+
+        if (moveDown)
+        {
+            move.y -= moveAmount;
+        }
+
+        if (moveLeft)
+        {
+            move.x -= moveAmount;
+        }
+
+        if (moveRight)
+        {
+            move.x += moveAmount;
+        }
+
+        pos += move;
+
+        transform.position = pos;
     }
 
 }
