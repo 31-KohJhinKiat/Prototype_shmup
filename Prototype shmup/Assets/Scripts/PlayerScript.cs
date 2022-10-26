@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
-    //Movement
+    //Audio
+    public AudioSource audioSource;
+    public AudioClip BulletSound;
+
+    //Movementspeed
     public float movementSpeed;
 
     //Shoot Bullets
@@ -16,21 +20,29 @@ public class PlayerScript : MonoBehaviour
     public GameObject playerBulletSpawn3;
     public GameObject playerBulletSpawn4;
 
+    public bool canShoot = true;
+    private float waitTime = 0.1f;
+    private float currentShootTime = 0.0f;
+    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Movement
+
         if (Input.GetKey(KeyCode.W))
         {
             if (transform.position.y <= 4f)
             {
-                transform.position += transform.up * movementSpeed * Time.deltaTime;
+                transform.position += 
+                    transform.up * movementSpeed * Time.deltaTime;
             }
 
 
@@ -40,7 +52,8 @@ public class PlayerScript : MonoBehaviour
         {
             if (transform.position.x >= -6f)
             {
-                transform.position -= transform.right * movementSpeed * Time.deltaTime;
+                transform.position -= 
+                    transform.right * movementSpeed * Time.deltaTime;
             }
         }
 
@@ -48,7 +61,8 @@ public class PlayerScript : MonoBehaviour
         {
             if (transform.position.y >= -4f)
             {
-                transform.position -= transform.up * movementSpeed * Time.deltaTime;
+                transform.position -= 
+                    transform.up * movementSpeed * Time.deltaTime;
             }
 
         }
@@ -57,29 +71,55 @@ public class PlayerScript : MonoBehaviour
         {
             if (transform.position.x <= 6f)
             {
-                transform.position += transform.right * movementSpeed * Time.deltaTime;
+                transform.position += 
+                    transform.right * movementSpeed * Time.deltaTime;
             }
 
         }
 
+        //Attacks
+        currentShootTime = currentShootTime + Time.deltaTime;
+
         if (Input.GetKey(KeyCode.J))
         {
-            Instantiate(playerBulletPrefab, 
-                playerBulletSpawn1.transform.position,
-                transform.rotation);
+            if (currentShootTime >= waitTime)
+            {
+                ShootBullets();
+                playShootSound();
 
-            Instantiate(playerBulletPrefab,
-                playerBulletSpawn2.transform.position,
-                transform.rotation);
+                currentShootTime = 0;
+            }
 
-            Instantiate(playerBulletPrefab,
-                playerBulletSpawn3.transform.position,
-                transform.rotation);
+            
 
-            Instantiate(playerBulletPrefab,
-                playerBulletSpawn4.transform.position,
-                transform.rotation);
         }
 
     }
+
+    public void ShootBullets()
+    {
+        Instantiate(playerBulletPrefab,
+                playerBulletSpawn1.transform.position,
+                transform.rotation);
+
+        Instantiate(playerBulletPrefab,
+                playerBulletSpawn2.transform.position,
+                transform.rotation);
+
+        Instantiate(playerBulletPrefab,
+            playerBulletSpawn3.transform.position,
+            Quaternion.identity);
+
+        Instantiate(playerBulletPrefab,
+            playerBulletSpawn4.transform.position,
+            Quaternion.identity);
+
+
+    }
+
+    public void playShootSound()
+    {
+        audioSource.PlayOneShot(BulletSound);
+    }
+
 }
