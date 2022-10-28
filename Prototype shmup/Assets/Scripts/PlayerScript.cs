@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    //Weapons
+    GunScript[] guns;
+
     //Movement speed
     private float moveSpeed = 10;
 

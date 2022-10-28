@@ -71,7 +71,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f96d638ae3b06640a75b2c908c135cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletSpeed: 80
+  direction: {x: 0, y: 1}
+  velocity: {x: 0, y: 1}
 --- !u!1 &8976438079037336262
 GameObject:
   m_ObjectHideFlags: 0
