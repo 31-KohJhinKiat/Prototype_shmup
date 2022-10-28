@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerBulletScript : MonoBehaviour
 {
-    public float BulletSpeed;
+    //Bullet direction and speed
+    public Vector2 direction = new Vector2(1, 0);
+    private float speed = 80;
+
+    public Vector2 velocity;
+
+    //Bullet disappear
     private float timeDestroyed;
 
     // Start is called before the first frame update
@@ -16,14 +22,22 @@ public class PlayerBulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.up * BulletSpeed * Time.deltaTime;
+        velocity = direction * speed;
 
+        //Time before bullet disappearance
         timeDestroyed += Time.deltaTime;
         if (timeDestroyed >= 3)
         {
             Destroy(gameObject);
             print("Bullet disappeared");
         }
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 pos = transform.position;
+        pos += velocity * Time.fixedDeltaTime;
+        transform.position = pos;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    //Movement speed
     private float moveSpeed = 10;
 
+    //Booleans
     bool moveUp;
     bool moveDown;
     bool moveLeft;
@@ -22,7 +24,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        //Movement
+        //Button input
         moveUp = Input.GetKey(KeyCode.UpArrow) 
             || Input.GetKey(KeyCode.W);
         moveDown = Input.GetKey(KeyCode.DownArrow)
@@ -36,6 +38,7 @@ public class PlayerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Movement
         Vector2 pos = transform.position;
 
         float moveAmount = moveSpeed * Time.fixedDeltaTime;
@@ -61,7 +64,38 @@ public class PlayerScript : MonoBehaviour
             move.x += moveAmount;
         }
 
+        float moveMagnitude = 
+            Mathf.Sqrt(move.x * move.x + move.y * move.y);
+        if (moveMagnitude > moveAmount)
+        {
+            float ratio = moveAmount / moveMagnitude;
+            move *= ratio;
+        }
+
+        moveMagnitude =
+            Mathf.Sqrt(move.x * move.x + move.y * move.y);
+
+        //Debug.Log(moveMagnitude);
+
         pos += move;
+
+        //boundaries
+        if (pos.x <= -5.6f)
+        {
+            pos.x = -5.6f;
+        }
+        if (pos.x >= 5.6f)
+        {
+            pos.x = 5.6f;
+        }
+        if (pos.y <= -3.8f)
+        {
+            pos.y = -3.8f;
+        }
+        if (pos.y >= 3.8f)
+        {
+            pos.y = 3.8f;
+        }
 
         transform.position = pos;
     }
