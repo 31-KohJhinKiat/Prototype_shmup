@@ -18,10 +18,12 @@ public class PlayerScript : MonoBehaviour
     bool moveLeft;
     bool moveRight;
 
+    bool shoot;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        guns = transform.GetComponentsInChildren<GunScript>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,17 @@ public class PlayerScript : MonoBehaviour
             || Input.GetKey(KeyCode.A);
         moveRight = Input.GetKey(KeyCode.RightArrow)
             || Input.GetKey(KeyCode.D);
+
+        shoot = Input.GetKey(KeyCode.J);
+        if (shoot)
+        {
+            shoot = false;
+            foreach(GunScript gun in guns)
+            {
+                gun.Shoot();
+            }
+
+        }
 
     }
 

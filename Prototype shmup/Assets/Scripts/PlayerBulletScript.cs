@@ -6,7 +6,7 @@ public class PlayerBulletScript : MonoBehaviour
 {
     //Bullet direction and speed
     public Vector2 direction = new Vector2(0, 1);
-    private float speed = 50;
+    public float speed;
 
     public Vector2 velocity;
 
