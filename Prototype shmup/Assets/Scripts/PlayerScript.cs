@@ -19,11 +19,13 @@ public class PlayerScript : MonoBehaviour
     bool moveRight;
 
     bool shoot;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         guns = transform.GetComponentsInChildren<GunScript>();
+        
     }
 
     // Update is called once per frame
@@ -49,6 +51,8 @@ public class PlayerScript : MonoBehaviour
             }
 
         }
+
+        
 
     }
 
