@@ -12,14 +12,17 @@ public class PlayerScript : MonoBehaviour
     //Movement speed
     private float moveSpeed = 10;
 
-    //Booleans
+    //Directions
     bool moveUp;
     bool moveDown;
     bool moveLeft;
     bool moveRight;
 
+    //Rapid fire
     bool shoot;
-    
+    private float waitTime = 0.2f;
+    private float currentShootTime = 0.0f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,15 +45,27 @@ public class PlayerScript : MonoBehaviour
             || Input.GetKey(KeyCode.D);
 
         shoot = Input.GetKey(KeyCode.J);
-        if (shoot)
-        {
-            shoot = false;
-            foreach(GunScript gun in guns)
+
+            if (shoot)
             {
-                gun.Shoot();
+            print("Activate Weapon");
+            shoot = false;
+                foreach (GunScript gun in guns)
+                {
+
+                    if(currentShootTime >= waitTime)
+                    {
+                        gun.Shoot();
+                        currentShootTime = 0;
+                        
+                    }
+                    
+                }
+
             }
 
-        }
+        
+
 
         
 

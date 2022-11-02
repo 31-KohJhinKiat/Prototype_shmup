@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBulletScript : MonoBehaviour
 {
     //Bullet direction and speed
-    public Vector2 direction;
+    public Vector2 direction = new Vector2(0, 1);
     public float speed;
 
     public Vector2 velocity;
@@ -31,6 +31,8 @@ public class PlayerBulletScript : MonoBehaviour
         pos += velocity * Time.fixedDeltaTime;
 
         transform.position = pos;
+
+        
 
     }
 
