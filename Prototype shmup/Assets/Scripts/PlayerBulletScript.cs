@@ -5,10 +5,11 @@ using UnityEngine;
 public class PlayerBulletScript : MonoBehaviour
 {
     //Bullet direction and speed
-    public Vector2 direction = new Vector2(0, 1);
+    public Vector2 direction;
     public float speed;
 
     public Vector2 velocity;
+    
 
     // Start is called before the first frame update
     void Start()
