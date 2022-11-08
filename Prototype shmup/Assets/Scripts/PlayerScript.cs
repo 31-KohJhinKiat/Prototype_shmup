@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     //Weapons
     GunScript[] guns;
+    NukeLauncherScript[] nuke;
 
     //Movement speed
     private float moveSpeed = 10;
@@ -20,15 +21,20 @@ public class PlayerScript : MonoBehaviour
 
     //Rapid fire
     bool shoot;
-    private float waitTime = 0.2f;
+    private float waitTime = 0.1f;
     private float currentShootTime = 0.0f;
 
+    //Nuke
+    bool shoot2;
+    private float waitTime2 = 3.0f;
+    private float currentShootTime2 = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         guns = transform.GetComponentsInChildren<GunScript>();
-        
+        nuke = transform.GetComponentsInChildren<NukeLauncherScript>();
+
     }
 
     // Update is called once per frame
@@ -44,30 +50,36 @@ public class PlayerScript : MonoBehaviour
         moveRight = Input.GetKey(KeyCode.RightArrow)
             || Input.GetKey(KeyCode.D);
 
+        //Rapid fire
+        currentShootTime = currentShootTime + Time.deltaTime;
+
+        //Launch nuke
+        currentShootTime2 = currentShootTime2 + Time.deltaTime;
+
         shoot = Input.GetKey(KeyCode.J);
-
-            if (shoot)
+            if (shoot == true)
             {
-            print("Activate Weapon");
-            shoot = false;
-                foreach (GunScript gun in guns)
+                if (currentShootTime >= waitTime)
                 {
+                    shootGun();
+                    currentShootTime = 0;
 
-                    if(currentShootTime >= waitTime)
-                    {
-                        gun.Shoot();
-                        currentShootTime = 0;
-                        
-                    }
-                    
                 }
+                
+            }
+
+        shoot2 = Input.GetKey(KeyCode.K);
+        if (shoot2 == true)
+        {
+            if (currentShootTime2 >= waitTime2)
+            {
+                shootNuke();
+                currentShootTime2 = 0;
 
             }
 
-        
+        }
 
-
-        
 
     }
 
@@ -133,6 +145,28 @@ public class PlayerScript : MonoBehaviour
         }
 
         transform.position = pos;
+    }
+
+    public void shootGun()
+    {
+        print("Activate weapon");
+        
+        foreach (GunScript gun in guns)
+        {
+            gun.Shoot();
+
+        }
+    }
+
+    public void shootNuke()
+    {
+        print("Fire nuke");
+
+        foreach (NukeLauncherScript nuke in nuke)
+        {
+            nuke.Shoot();
+
+        }
     }
 
 }
