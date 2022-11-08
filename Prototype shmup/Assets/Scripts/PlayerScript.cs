@@ -10,6 +10,11 @@ public class PlayerScript : MonoBehaviour
     GunScript[] guns;
     NukeLauncherScript[] nuke;
 
+    //Audio
+    public AudioSource audioSource;
+    public AudioClip gunAudio;
+    public AudioClip nukeLauncherAudio;
+
     //Movement speed
     private float moveSpeed = 10;
 
@@ -32,8 +37,12 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //get weapons
         guns = transform.GetComponentsInChildren<GunScript>();
         nuke = transform.GetComponentsInChildren<NukeLauncherScript>();
+        
+        //get audio
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -53,7 +62,7 @@ public class PlayerScript : MonoBehaviour
         //Rapid fire
         currentShootTime = currentShootTime + Time.deltaTime;
 
-        //Launch nuke
+        //Time before launch nuke
         currentShootTime2 = currentShootTime2 + Time.deltaTime;
 
         shoot = Input.GetKey(KeyCode.J);
@@ -62,6 +71,7 @@ public class PlayerScript : MonoBehaviour
                 if (currentShootTime >= waitTime)
                 {
                     shootGun();
+                    audioSource.PlayOneShot(gunAudio);
                     currentShootTime = 0;
 
                 }
@@ -74,6 +84,7 @@ public class PlayerScript : MonoBehaviour
             if (currentShootTime2 >= waitTime2)
             {
                 shootNuke();
+                audioSource.PlayOneShot(nukeLauncherAudio);
                 currentShootTime2 = 0;
 
             }
