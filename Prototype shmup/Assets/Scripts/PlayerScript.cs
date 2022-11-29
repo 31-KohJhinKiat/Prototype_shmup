@@ -8,12 +8,12 @@ public class PlayerScript : MonoBehaviour
 {
     //Weapons
     GunScript[] guns;
-    NukeLauncherScript[] nuke;
+    BombLauncherScript[] bomb;
 
     //Audio
     public AudioSource audioSource;
     public AudioClip gunAudio;
-    public AudioClip nukeLauncherAudio;
+    public AudioClip bombLauncherAudio;
 
     //Movement speed
     private float moveSpeed = 10;
@@ -26,8 +26,7 @@ public class PlayerScript : MonoBehaviour
 
     //Rapid fire
     bool shoot;
-    private float waitTime = 0.1f;
-    private float currentShootTime = 0.0f;
+    
 
     //Nuke
     bool shoot2;
@@ -39,7 +38,9 @@ public class PlayerScript : MonoBehaviour
     {
         //get weapons
         guns = transform.GetComponentsInChildren<GunScript>();
-        nuke = transform.GetComponentsInChildren<NukeLauncherScript>();
+
+
+        bomb = transform.GetComponentsInChildren<BombLauncherScript>();
         
         //get audio
         audioSource = GetComponent<AudioSource>();
@@ -59,32 +60,25 @@ public class PlayerScript : MonoBehaviour
         moveRight = Input.GetKey(KeyCode.RightArrow)
             || Input.GetKey(KeyCode.D);
 
-        //Rapid fire
-        currentShootTime = currentShootTime + Time.deltaTime;
+        
 
         //Time before launch nuke
         currentShootTime2 = currentShootTime2 + Time.deltaTime;
 
-        shoot = Input.GetKey(KeyCode.J);
+        shoot = Input.GetKeyDown(KeyCode.J);
             if (shoot == true)
             {
-                if (currentShootTime >= waitTime)
-                {
                     shootGun();
-                    audioSource.PlayOneShot(gunAudio);
-                    currentShootTime = 0;
-
-                }
-                
+            
             }
 
-        shoot2 = Input.GetKey(KeyCode.K);
-        if (shoot2 == true)
+        shoot = Input.GetKeyDown(KeyCode.K);
+        if (shoot == true)
         {
             if (currentShootTime2 >= waitTime2)
             {
-                shootNuke();
-                audioSource.PlayOneShot(nukeLauncherAudio);
+                shootBomb();
+                audioSource.PlayOneShot(bombLauncherAudio);
                 currentShootTime2 = 0;
 
             }
@@ -169,15 +163,40 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    public void shootNuke()
+    public void shootBomb()
     {
-        print("Fire nuke");
+        print("Fire bomb!");
 
-        foreach (NukeLauncherScript nuke in nuke)
+        foreach (BombLauncherScript bomb in bomb)
         {
-            nuke.Shoot();
-
+            bomb.Shoot();
         }
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        BulletScript bullet = 
+            collision.GetComponent<BulletScript>();
+
+        if (bullet != null)
+        {
+            if (bullet.isEnemyBullet)
+            {
+                Destroy(gameObject);
+                Destroy(bullet.gameObject);
+            }
+        }
+
+        EnemyScript enemyScript = 
+            collision.GetComponent<EnemyScript>();
+
+        if (enemyScript != null)
+        {           
+                Destroy(gameObject);
+                Destroy(enemyScript.gameObject);
+            
+        }
+
     }
 
 }

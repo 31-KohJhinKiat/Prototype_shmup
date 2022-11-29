@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerNukeScript : MonoBehaviour
+public class BombScript : MonoBehaviour
 {
     //Bullet direction and speed
     public Vector2 direction = new Vector2(0, 1);
@@ -20,6 +20,11 @@ public class PlayerNukeScript : MonoBehaviour
     void Update()
     {
         velocity = direction * speed;
+
+        if (transform.position.y > 3.7f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void FixedUpdate()
@@ -30,8 +35,15 @@ public class PlayerNukeScript : MonoBehaviour
 
         transform.position = pos;
 
+    }
 
-
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
+     
     }
 
 }

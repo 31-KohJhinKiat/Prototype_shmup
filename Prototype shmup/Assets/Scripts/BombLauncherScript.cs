@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NukeLauncherScript : MonoBehaviour
+public class BombLauncherScript : MonoBehaviour
 {
-    public PlayerNukeScript nuke;
+    public BombScript bomb;
     Vector2 direction;
 
     // Start is called before the first frame update
@@ -23,13 +23,13 @@ public class NukeLauncherScript : MonoBehaviour
     public void Shoot()
     {
         GameObject go =
-            Instantiate(nuke.gameObject,
+            Instantiate(bomb.gameObject,
             transform.position, transform.rotation);
 
-        PlayerNukeScript goNuke =
-            go.GetComponent<PlayerNukeScript>();
+        BombScript goBomb =
+            go.GetComponent<BombScript>();
 
-        goNuke.direction = direction;
+        goBomb.direction = direction;
     }
 
 }

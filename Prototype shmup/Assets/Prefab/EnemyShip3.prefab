@@ -91,11 +91,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5192553201536452123}
   - component: {fileID: 1411276166151542085}
-  - component: {fileID: 57181440965783228}
   - component: {fileID: -7236381997759499307}
+  - component: {fileID: 57181440965783228}
+  - component: {fileID: -4419927851262024722}
+  - component: {fileID: -3100157882625999492}
   m_Layer: 0
   m_Name: EnemyShip3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,6 +130,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 2
+--- !u!114 &-7236381997759499307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406811517662814448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc97ff012da13e44ab764d8dc79cc72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inverted: 0
 --- !u!60 &57181440965783228
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -161,7 +176,28 @@ PolygonCollider2D:
       - {x: 0.0009607598, y: -0.5454977}
       - {x: 0.26245427, y: -0.31856182}
       - {x: 0.70026153, y: 0.43839484}
---- !u!114 &-7236381997759499307
+--- !u!50 &-4419927851262024722
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406811517662814448}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!114 &-3100157882625999492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,6 +206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2406811517662814448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffc97ff012da13e44ab764d8dc79cc72, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ee78876b7a85e342b710c9ecd4d370a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHealth: 3
