@@ -10,7 +10,7 @@ public class EnemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        LevelController.instance.AddEnemy();
     }
 
     // Update is called once per frame
@@ -21,6 +21,7 @@ public class EnemyScript : MonoBehaviour
             canBeDestroyed = true;
             GunScript[] guns = 
                 transform.GetComponentsInChildren<GunScript>();
+
             foreach (GunScript gun in guns)
             {
                 gun.isActive = true;
@@ -46,7 +47,6 @@ public class EnemyScript : MonoBehaviour
             {
                 enemyHealth--;
                 Destroy(Bullet.gameObject);
-
                 if (enemyHealth <= 0)
                 {
                     Destroy(gameObject);
@@ -55,6 +55,11 @@ public class EnemyScript : MonoBehaviour
             }
         }
 
+    }
+
+    private void OnDestroy()
+    {
+        LevelController.instance.RemoveEnemy();
     }
 
 }

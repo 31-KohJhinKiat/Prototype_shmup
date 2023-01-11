@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
+    //Health
+    public int playerHealth = 100;
+
     //Weapons
     GunScript[] guns;
     BombLauncherScript[] bomb;
@@ -26,7 +29,9 @@ public class PlayerScript : MonoBehaviour
 
     //Rapid fire
     bool shoot;
-    
+    private float waitTime = 0.1f;
+    private float currentShootTime = 0.0f;
+
 
     //Nuke
     bool shoot2;
@@ -38,7 +43,10 @@ public class PlayerScript : MonoBehaviour
     {
         //get weapons
         guns = transform.GetComponentsInChildren<GunScript>();
-
+        foreach(GunScript gun in guns)
+        {
+            gun.isActive = true;
+        }
 
         bomb = transform.GetComponentsInChildren<BombLauncherScript>();
         
@@ -60,30 +68,37 @@ public class PlayerScript : MonoBehaviour
         moveRight = Input.GetKey(KeyCode.RightArrow)
             || Input.GetKey(KeyCode.D);
 
-        
+        //Time before shoot bullets
+        currentShootTime = currentShootTime + Time.deltaTime;
 
         //Time before launch nuke
         currentShootTime2 = currentShootTime2 + Time.deltaTime;
 
-        shoot = Input.GetKeyDown(KeyCode.J);
+        shoot = Input.GetKey(KeyCode.J);
             if (shoot == true)
             {
+                if (currentShootTime >= waitTime)
+                {
                     shootGun();
-            
+                    audioSource.PlayOneShot(gunAudio);
+                    currentShootTime = 0;
+
+                }
+
             }
 
-        shoot = Input.GetKeyDown(KeyCode.K);
-        if (shoot == true)
-        {
-            if (currentShootTime2 >= waitTime2)
+        shoot2 = Input.GetKey(KeyCode.K);
+            if (shoot2 == true)
             {
-                shootBomb();
-                audioSource.PlayOneShot(bombLauncherAudio);
-                currentShootTime2 = 0;
+                if (currentShootTime2 >= waitTime2)
+                {
+                    shootBomb();
+                    audioSource.PlayOneShot(bombLauncherAudio);
+                    currentShootTime2 = 0;
+
+                }
 
             }
-
-        }
 
 
     }
@@ -182,8 +197,14 @@ public class PlayerScript : MonoBehaviour
         {
             if (bullet.isEnemyBullet)
             {
-                Destroy(gameObject);
+                playerHealth -= 10;
                 Destroy(bullet.gameObject);
+
+                if (playerHealth <= 0)
+                {
+                    Destroy(gameObject);
+                }
+
             }
         }
 
