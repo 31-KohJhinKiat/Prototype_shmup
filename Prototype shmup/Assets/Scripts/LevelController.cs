@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class LevelController : MonoBehaviour
     string[] levels = { "level 1", "Level 2" };
     int currentLevel = 1;
 
+    //UI
+    public int score;
+    Text P1Score;
+
     //Awake
     private void Awake()
     {
@@ -24,6 +29,8 @@ public class LevelController : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            P1Score = 
+                GameObject.Find("P1 Score").GetComponent<Text>();
 
         }
         else
@@ -67,6 +74,12 @@ public class LevelController : MonoBehaviour
 
         }
 
+    }
+
+    public void AddScore(int amountToAdd)
+    {
+        score += amountToAdd;
+        P1Score.text = ("Score: ") + score.ToString();
     }
 
     public void AddEnemy()

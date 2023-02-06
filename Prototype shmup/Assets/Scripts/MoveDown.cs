@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveDown : MonoBehaviour
 {
-    public float enemySpeed;
+    public float objectSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class MoveDown : MonoBehaviour
     {
         Vector2 pos = transform.position;
 
-        pos.y -= enemySpeed * Time.fixedDeltaTime;
+        pos.y -= objectSpeed * Time.fixedDeltaTime;
 
         if (pos.y < -12)
         {

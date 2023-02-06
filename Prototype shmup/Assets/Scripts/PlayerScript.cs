@@ -38,9 +38,17 @@ public class PlayerScript : MonoBehaviour
     private float waitTime2 = 3.0f;
     private float currentShootTime2 = 0.0f;
 
+    //Shield
+    GameObject shield;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        //Shield
+        shield = transform.Find("Shield").gameObject;
+        DeactivateShield();
+
         //get weapons
         guns = transform.GetComponentsInChildren<GunScript>();
         foreach(GunScript gun in guns)
@@ -188,6 +196,21 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    void ActivateShield()
+    {
+        shield.SetActive(true);
+    }
+
+    void DeactivateShield()
+    {
+        shield.SetActive(false);
+    }
+
+    bool HasShield()
+    {
+        return shield.activeSelf;
+    }
+
     public void OnTriggerEnter2D(Collider2D collision)
     {
         BulletScript bullet = 
@@ -212,10 +235,22 @@ public class PlayerScript : MonoBehaviour
             collision.GetComponent<EnemyScript>();
 
         if (enemyScript != null)
-        {           
-                Destroy(gameObject);
-                Destroy(enemyScript.gameObject);
-            
+        {
+            if (HasShield())
+            {
+                DeactivateShield();
+            }
+            else
+            {
+                playerHealth -= 20;             
+
+                if (playerHealth <= 0)
+                {
+                    Destroy(gameObject);
+                }
+            }
+            Destroy(enemyScript.gameObject);
+
         }
 
     }

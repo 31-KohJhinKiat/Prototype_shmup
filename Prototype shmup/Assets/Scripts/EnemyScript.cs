@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
+    //Can kill enemy
     bool canBeDestroyed = false;
+
+    //Health
     public float enemyHealth;
+
+    //Score
+    public int scoreValue;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +55,7 @@ public class EnemyScript : MonoBehaviour
                 Destroy(Bullet.gameObject);
                 if (enemyHealth <= 0)
                 {
+                    LevelController.instance.AddScore(scoreValue);
                     Destroy(gameObject);
                 }
 
